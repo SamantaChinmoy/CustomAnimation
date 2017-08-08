@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="customAnimate.js"></script>
+    <title></title>
+    <style type="text/css">
+    .circle1 {
+        background: #385a94;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        position: relative;
+        top: 350px;
+    }
+
+    .circle2 {
+        background: #385a94;
+        border-radius: 50%;
+        height: 1px;
+        width: 1px;
+        position: relative;
+        top: 350px;
+        float: left;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="ball" class="circle1">
+        <!-- -->
+    </div>
+    <div style="top:350px;position: relative;width: 200px;height: 2px;background:#a9aaab;">
+        <button id="btn" style="top:10px;position: relative;">click</button>
+    </div>
+    <div style="top:50px;position: relative;width: 200px;height: 2px;background:#a9aaab;">
+    </div>
+    <!-- <div  id="mainContainer">
+    </div> -->
+    <script type="text/javascript">
+    (function() {
+        var el = document.getElementById("ball"),
+            startTime,
+            endTime,
+            timeDiff,
+            timeInSec,
+            velocity = 1,
+            distance,
+            btn = document.getElementById("btn"),
+            heightOfContainer = 300,
+            step = [],
+            numberOfStep, remainIngNo, timeStep;
+        btn.addEventListener("mousedown", function(e) {
+            startTime = e.timeStamp;
+        });
+        btn.addEventListener("mouseup", function(e) {
+            endTime = e.timeStamp;
+            timeDiff = Math.abs(startTime - endTime);
+            timeInSec = (timeDiff);
+            distance = velocity * timeInSec;;
+            if (distance > 102) {
+                numberOfStep = Math.floor(distance / 102);
+                if (numberOfStep % 2 !== 0) {
+                    numberOfStep + 1;
+                }
+                timeStep = Math.floor(timeInSec / numberOfStep);
+                f(0, numberOfStep, timeStep);
+            }
+        });
+        var f = function(i, numberOfStep, timeStep) {
+            if (i % 2 !== 0) {
+                distance = 350;
+            } else {
+                distance = 102;
+            }
+            animate(el, { top: distance }, timeStep * i).then(function() {
+                console.log(i);
+                i++;
+                if (i < numberOfStep) {
+                    f(i, numberOfStep, timeStep);
+                }
+            });
+        }
+    })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,121 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="customAnimate.js"></script>
+    <title></title>
+    <style type="text/css">
+    .circle1 {
+        background: #385a94;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        position: relative;
+        top: 350px;
+    }
+    .circle2 {
+        background: #385a94;
+        border-radius: 50%;
+        height: 1px;
+        width: 1px;
+        position: relative;
+        top: 350px;
+        float: left;
+    }
+    </style>
+</head>
+
+<body>
+<div id="gameContainer">
+    <button id="btn">start</button>
+    <div id="ball" class="circle1">
+        <!-- -->
+    </div>
+    <div id="bat" style="top:350px;position: relative;width: 50px;height: 18px;background:#a9aaab;">
+    </div>
+    <div style="top:380px;position: relative;">
+        UserScore: &nbsp;&nbsp;<span id="scoreCard">0</span>&nbsp;&nbsp;Level<span id="level">1</span>
+    </div>
+    <div id="bat2" style="top:50px;position: relative;width: 50px;height: 18px;background:#a9aaab;">
+    </div>
+    </div>
+    <!-- <div  id="mainContainer">
+    </div> -->
+    <script type="text/javascript">
+    (function() {
+        var ball = document.getElementById("ball"),
+            top,
+            btn = document.getElementById("btn"),
+            left,
+            bat = document.getElementById("bat"),
+            bat2 = document.getElementById("bat2"),
+            bat1Rect = bat.style,
+            bat2Rect = bat2.style,
+            differance = ((parseInt(bat1Rect.top) - parseInt(bat2Rect.top)) - (2 * ball.getBoundingClientRect().width)) - parseInt(bat1Rect.width),
+            score = 0,
+            level = 1,
+            scoreCard = document.getElementById("scoreCard"),
+            levelCard = document.getElementById("level"),
+            moveBall = function(i, time) {
+                if (i % 2 !== 0) {
+                    top = parseInt(bat.style["top"]) + 10;
+                    left = Math.random() * 300;
+                } else {
+                    top = differance;
+                    left = Math.random() * 300;
+                    animate(bat2, { left: left }, time);
+                }
+                animate(ball, { top: top, left: left }, time).then(function() {
+                    var rect1 = ball.getBoundingClientRect(),
+                        rect2 = bat.getBoundingClientRect();
+                    i++;
+                    if (i % 2 == 0) {
+                        if (!(rect1.right < rect2.left || rect1.left > rect2.right || rect1.bottom < rect2.top ||
+                                rect1.top > rect2.bottom)) {
+                            score++;
+                            scoreCard.innerHTML = score;
+                            if (score % 4 === 0) {
+                                time = time - (time / 4);
+                                level++;
+                                levelCard.innerHTML = level;
+                            }
+                            moveBall(i, time);
+                        } else {
+                            alert("over");
+                        }
+                    } else {
+                        moveBall(i, time);
+                    }
+                });
+            },
+            moveBat = (function() {
+                var left = 0,
+                    element = document.getElementById("bat");
+                return {
+                    Right: function() {
+                        (left > 0) && (left = left - 30);
+                        element.style["left"] = left;
+                    },
+                    Left: function() {
+                        (left < 300) && (left = left + 30);
+                        element.style["left"] = left;
+                    }
+                }
+            })();
+        btn.addEventListener("click", function() {
+            moveBall(0, 2000);
+        });
+        document.onkeydown = function(e) {
+            switch (e.keyCode) {
+                case 37:
+                    moveBat.Right();
+                    break;
+                case 39:
+                    moveBat.Left();
+                    break;
+            }
+        };
+    })();
+    </script>
+</body>
+
+</html>

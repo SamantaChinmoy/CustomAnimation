@@ -1,0 +1,107 @@
+<html>
+
+<head>
+    <script type="text/javascript" src="customAnimate.js"></script>
+    <title></title>
+    <style type="text/css">
+    .outer-circle {
+        background: #385a94;
+        border-radius: 50%;
+        height: 50px;
+        width: 50px;
+        position: relative;
+        float: left;
+    }
+    .main-circle {
+        border-radius: 50%;
+        height: 500px;
+        width: 500px;
+        position: relative;
+        float: left;
+        overflow: hidden;
+    }
+    .inner-circle {
+        position: absolute;
+        background: #a9aaab;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        margin-left: -25%;
+        margin-top: -25%;
+    }
+    </style>
+</head>
+
+<body>
+    <button onclick="doing();">Animate</button>
+    <div class="main-circle">
+        <!-- -->
+    </div>
+    <!-- <div  id="mainContainer">
+    </div> -->
+    <script type="text/javascript">
+    (function(win, doc, factory) {
+        var elementNo = 100,
+            parentElement = doc.body,
+            elements,
+            size,
+            styleObj = {
+                width: '50%',
+                height: '50%',
+                background: getRandomColor
+            },
+            element,
+            getRandomColor = function() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            };
+        for (var i = 1; i <= elementNo; i++) {
+            (function(i) {
+                var outer = factory.createElement("div", { "class": "outer-circle", "name": "animate" }, document.getElementsByClassName("main-circle")[0]);
+                styleObj.width = "50%";
+                styleObj.height = "50%";
+                styleObj.background = getRandomColor();
+                element = factory.createElement("div", { "class": "inner-circle", "name": "animate" }, outer);
+                for (var pro in styleObj) {
+                    element.style[pro] = styleObj[pro];
+                }
+                outer.style["background"] = getRandomColor();
+            })(i)
+        };
+        win.doing = function() {
+            var rectElements1 = document.getElementsByName("animate");
+            rectElements1.constructor = Array;
+            var fun = function() {
+                var g = animate(rectElements1, { width: 10, height: 10, "margin-left": 250, "margin-top": 250 }, 7000).then(function(el) {
+                    for (var i = 0; i < el.length; i++) {
+                        el[i]["style"]["background"] = getRandomColor();
+                    }
+                    g.reset().then(function() { fun(); })
+                });
+            }
+            fun();
+        }
+    })(window, document, (function() {
+        return {
+            createElement: function(type, attributes, parentElement) {
+                var element = document.createElement(type);
+                for (var key in attributes) {
+                    if (key == "class") {
+                        element.classList.add(attributes[key]); // add all classes at once
+                    } else {
+                        element.setAttribute(key, attributes[key]);
+                    }
+                }
+                parentElement.appendChild(element);
+                return element;
+            }
+        };
+    })());
+    </script>
+</body>
+
+</html>
