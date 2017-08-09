@@ -12,6 +12,7 @@
         position: relative;
         top: 350px;
     }
+
     .circle2 {
         background: #385a94;
         border-radius: 50%;
@@ -25,12 +26,13 @@
 </head>
 
 <body>
-<div id="gameContainer">
-    <button id="btn">start</button>
-    <div id="ball" class="circle1">
-        <!-- -->
-    </div>
-    <div id="bat" style="top:350px;position: relative;width: 50px;height: 18px;background:#a9aaab;">
+    <div id="gameContainer">
+        <button id="btn">start</button>
+        <div id="ball" class="circle1">
+            <!-- -->
+        </div>
+        <div id="bat" style="left:0px;top:350px;position: relative;width: 50px;height: 18px;background:#a9aaab;">
+        </div>
     </div>
     <div style="top:380px;position: relative;">
         UserScore: &nbsp;&nbsp;<span id="scoreCard">0</span>&nbsp;&nbsp;Level<span id="level">1</span>
@@ -41,7 +43,7 @@
     <!-- <div  id="mainContainer">
     </div> -->
     <script type="text/javascript">
-    (function() {
+    (function(factory) {
         var ball = document.getElementById("ball"),
             top,
             btn = document.getElementById("btn"),
@@ -70,7 +72,7 @@
                     i++;
                     if (i % 2 == 0) {
                         if (!(rect1.right < rect2.left || rect1.left > rect2.right || rect1.bottom < rect2.top ||
-                                rect1.top > rect2.bottom)) {
+                                rect1.top > rect2.bottom) && time > 500) {
                             score++;
                             scoreCard.innerHTML = score;
                             if (score % 4 === 0) {
@@ -79,6 +81,8 @@
                                 levelCard.innerHTML = level;
                             }
                             moveBall(i, time);
+                        } else if (time < 500) {
+                            alert("complete");
                         } else {
                             alert("over");
                         }
@@ -104,17 +108,53 @@
         btn.addEventListener("click", function() {
             moveBall(0, 2000);
         });
-        document.onkeydown = function(e) {
-            switch (e.keyCode) {
-                case 37:
-                    moveBat.Right();
-                    break;
-                case 39:
-                    moveBat.Left();
-                    break;
+        factory.dragElement(bat);
+        // document.onkeydown = function(e) {
+        //     switch (e.keyCode) {
+        //         case 37:
+        //             moveBat.Right();
+        //             break;
+        //         case 39:
+        //             moveBat.Left();
+        //             break;
+        //     }
+        // };
+
+        factory.dragElement(bat);
+    })((function() {
+        return {
+            addListenerMulti: function(element, eventNames, listener) {
+                var events = eventNames.split(' ');
+                for (var i = 0, iLen = events.length; i < iLen; i++) {
+                    element.addEventListener(events[i], listener);
+                }
+            },
+            dragElement: function(element) {
+                var mousePosition,
+                    offset = [0, 0],
+                    isDown = false,
+                    addListenerMulti = this.addListenerMulti;
+                addListenerMulti(element, 'tochstart mousedown', function(e) {
+                    isDown = true;
+                    offset = [
+                        element.offsetLeft - e.clientX
+                    ];
+                });
+                addListenerMulti(document, 'touchend mouseup', function() {
+                    isDown = false;
+                });
+                addListenerMulti(document, 'touchmove mousemove', function(event) {
+                    event.preventDefault();
+                    if (isDown && event.clientX < 350) {
+                        mousePosition = {
+                            x: event.clientX
+                        };
+                        element.style.left = (mousePosition.x + offset[0]) + 'px';
+                    }
+                });
             }
-        };
-    })();
+        }
+    })());
     </script>
 </body>
 
