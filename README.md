@@ -13,7 +13,7 @@ How To Use
 
 Reference the [customAnimate.js.js file] from your HTML document. 
 Then call the animate method.
-Basics Arguments for animate method given in the following code snippet. 
+* Basics Arguments for animate method given in the following code snippet. 
 
 ```js
 /*
