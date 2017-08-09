@@ -6,7 +6,7 @@ Demos
 *  [Simple Ping Pong Game](https://samantachinmoy.github.io/CustomAnimation/sample3.html)
 *  [Simple Custom Animation](https://samantachinmoy.github.io/CustomAnimation/sample1.html)
 *  [bounce the ball](https://samantachinmoy.github.io/CustomAnimation/sample2.html)
-*  For more demos chekout this [JsFiddle](https://jsfiddle.net/ChinmoySamanta1993/dxkuby1n/1/)
+*  For more demos chekout this [JsFiddle](https://jsfiddle.net/ChinmoySamanta1993/dxkuby1n/2/)
 
 How To Use
 ----------
