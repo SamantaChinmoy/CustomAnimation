@@ -5,7 +5,7 @@ Demos
 -------
 *  [Simple Ping Pong Game](https://samantachinmoy.github.io/CustomAnimation/sample3.html)
 *  [Simple Custom Animation](https://samantachinmoy.github.io/CustomAnimation/sample1.html)
-*  [Bounc the ball](https://samantachinmoy.github.io/CustomAnimation/sample2.html)
+*  [bounce the ball](https://samantachinmoy.github.io/CustomAnimation/sample2.html)
 *  For more demos chekout this [JsFiddle](https://jsfiddle.net/ChinmoySamanta1993/dxkuby1n/1/)
 
 How To Use
@@ -13,7 +13,7 @@ How To Use
 
 Reference the [customAnimate.js.js file] from your HTML document. 
 Then call the animate method.
-Basics: Arguments for animate method.
+Basics Arguments for animate method given in the following code snippet. 
 
 ```js
 /*
@@ -26,6 +26,15 @@ Basics: Arguments for animate method.
 - @return Object which containes promise object and reset function which is used to reset the element with same animation.
 */
 var animateRef = animate(elements,styleObj,duration,callBack,easing);
+/*
+- Example of promise and reset method.
+*/
+var animateRef = animate(elements,styleObj,duration).then(function(){animateRef.reset();});
+/*
+- You can pass elements refernce (which is used in animate function) to callBack function and promise function.
+*/
+animate(elements,styleObj,duration,function(el){console.log(el);});
+animate(elements,styleObj,duration).then(function(el){console.log(el);});
 ```
 Supported Browsers
 ------------------
