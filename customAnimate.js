@@ -317,10 +317,10 @@
                         });
                     },
                     // self.state = 1 when assign value into this._deferreds array.
-                    resolve = function(self, newValue) {
-                        self._state = 1;
-                        self._value = newValue;
-                        finale(self);
+                    resolve = function(Self, newValue) {
+                        Self._state = 1;
+                        Self._value = newValue;
+                        finale(Self);
                     },
                     // Execute callBack function assign to _deferreds array.
                     finale = function(self) {
